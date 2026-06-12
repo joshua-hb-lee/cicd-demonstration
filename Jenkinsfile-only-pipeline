@@ -1,0 +1,44 @@
+pipeline {
+  agent any
+
+  environment {
+    APP_NAME = 'cicd-demo'
+    JAR_NAME = '${SSH_SERVER}.jar'
+
+    SSH_SERVER = 'my-server'
+
+    // Remote server path
+    REMOTE_DIR = '/home/ubuntu/app'
+  }
+
+  // Disallow concurrent executions of the Pipeline.
+  options { disableConcurrentBuilds() }
+
+  stages {
+    stage('Init') {
+      steps {
+        script {
+          sh 'printenv'
+        }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh './gradlew clean test'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh './gradlew clean build -x test'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+
+      }
+    }
+  }
+}

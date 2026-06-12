@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.hanbinlee"
-version = "0.0.1-SNAPSHOT"
+//version = "0.0.1-SNAPSHOT"
 description = "cicd-demonstration"
 
 java {
