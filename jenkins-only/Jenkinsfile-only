@@ -1,0 +1,67 @@
+pipeline {
+  agent any
+
+  environment {
+    APP_NAME = 'cicd-demo'
+    JAR_NAME = '${APP_NAME}.jar'
+    SPRING_PROFILE = 'prod'
+  }
+
+  // Disallow concurrent executions of the Pipeline.
+  options { disableConcurrentBuilds() }
+
+  stages {
+    stage('Init') {
+      steps {
+        script {
+          sh 'printenv'
+        }
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh './gradlew clean test'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh './gradlew clean build -x test'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        lock(resource: 'deployment') {
+          sshPublisher(
+            publishers: [
+              sshPublisherDesc(
+                configName: 'remote-server',
+                transfers: [
+                  sshTransfer(
+                    cleanRemote: false,
+                    excludes: '',
+                    execCommand: './deploy.sh ${PORT} ${WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}',
+                    execTimeout: 120000,
+                    flatten: false,
+                    makeEmptyDirs: false,
+                    noDefaultExcludes: false,
+                    patternSeparator: '[, ]+',
+                    remoteDirectory: 'deploy',
+                    remoteDirectorySDF: false,
+                    removePrefix: '/build/libs',
+                    sourceFiles: '/build/libs/cicd-demo.jar'
+                  )
+                ],
+                usePromotionTimestamp: false,
+                useWorkspaceInPromotion: false,
+                verbose: false
+              )
+            ]
+          )
+        }
+      }
+    }
+  }
+}
