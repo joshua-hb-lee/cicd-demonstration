@@ -4,6 +4,7 @@ pipeline {
   environment {
     PORT = '8081'
     APP_NAME = 'cicd-demo'
+    SCRIPT_FILE = 'deploy.sh'
     JAR_NAME = '${APP_NAME}.jar'
     SPRING_PROFILE = 'prod'
     REMOTE_WORK_DIR = '/home/app/deploy'
@@ -41,13 +42,19 @@ pipeline {
               sshPublisherDesc(
                 configName: 'remote-server',
                 transfers: [
+                  // 1. transferring bash script file to manage in project's repository
+                  sshTransfer(
+                    execTimeout: 120000,
+                    patternSeparator: '[, ]+',
+                    remoteDirectory: 'deploy',
+                    removePrefix: '/jenkins-only',
+                    sourceFiles: "/jenkins-only/${SCRIPT_FILE}",
+                    execCommand: "chmod 500 ${SCRIPT_FILE}",
+                  ),
+                  // 2. deploying application file
                   sshTransfer(
                     cleanRemote: false,
                     excludes: '',
-                    execCommand: """
-                      cd ${REMOTE_WORK_DIR}
-                      ./deploy.sh ${PORT} ${REMOTE_WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}
-                    """,
                     execTimeout: 120000,
                     flatten: false,
                     makeEmptyDirs: false,
@@ -56,7 +63,11 @@ pipeline {
                     remoteDirectory: 'deploy',
                     remoteDirectorySDF: false,
                     removePrefix: '/build/libs',
-                    sourceFiles: '/build/libs/cicd-demo.jar'
+                    sourceFiles: "/build/libs/${JAR_NAME}",
+                    execCommand: """
+                      cd ${REMOTE_WORK_DIR}
+                      ./deploy.sh ${PORT} ${REMOTE_WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}
+                    """,
                   )
                 ],
                 usePromotionTimestamp: false,
