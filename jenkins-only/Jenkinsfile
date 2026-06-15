@@ -49,7 +49,7 @@ pipeline {
                     remoteDirectory: 'deploy',
                     removePrefix: '/jenkins-only',
                     sourceFiles: "/jenkins-only/${SCRIPT_FILE}",
-                    execCommand: "sudo chmod 500 ${SCRIPT_FILE}",
+                    execCommand: "chmod 500 ${SCRIPT_FILE}",
                   ),
                   // 2. deploying application file
                   sshTransfer(
