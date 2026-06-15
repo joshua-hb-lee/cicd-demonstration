@@ -1,15 +1,6 @@
 pipeline {
   agent any
 
-  environment {
-    PORT = '8081'
-    APP_NAME = 'cicd-demo'
-    SCRIPT_FILE = 'deploy.sh'
-    JAR_NAME = '${APP_NAME}.jar'
-    SPRING_PROFILE = 'prod'
-    REMOTE_WORK_DIR = '/home/app/deploy'
-  }
-
   // Disallow concurrent executions of the Pipeline.
   options { disableConcurrentBuilds() }
 
@@ -17,6 +8,13 @@ pipeline {
     stage('Init') {
       steps {
         script {
+          PORT = '8081'
+          APP_NAME = 'cicd-demo'
+          SCRIPT_FILE = 'deploy.sh'
+          JAR_NAME = "${APP_NAME}.jar"
+          SPRING_PROFILE = 'prod'
+          REMOTE_WORK_DIR = '/home/app/deploy'
+
           sh 'printenv'
         }
       }
