@@ -2,9 +2,11 @@ pipeline {
   agent any
 
   environment {
+    PORT = '8081'
     APP_NAME = 'cicd-demo'
     JAR_NAME = '${APP_NAME}.jar'
     SPRING_PROFILE = 'prod'
+    REMOTE_WORK_DIR = '/home/app/deploy'
   }
 
   // Disallow concurrent executions of the Pipeline.
@@ -42,7 +44,7 @@ pipeline {
                   sshTransfer(
                     cleanRemote: false,
                     excludes: '',
-                    execCommand: './deploy.sh ${PORT} ${WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}',
+                    execCommand: './deploy.sh ${PORT} ${REMOTE_WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}',
                     execTimeout: 120000,
                     flatten: false,
                     makeEmptyDirs: false,

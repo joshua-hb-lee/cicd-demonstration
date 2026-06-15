@@ -27,16 +27,20 @@ app_health_check() {
   fi
 }
 
-cd ${WORK_DIR}
-echo "Stopping existing application..."
-pkill -f ${JAR_NAME} || true
+# deploy and run application
+deploy() {
+  cd ${WORK_DIR}
+  echo "Stopping existing application..."
+  pkill -f ${JAR_NAME} || true
 
-echo "Starting new application..."
-nohup java -jar \
-  -Dspring.profiles.active="${SPRING_PROFILE}" \
-  ${JAR_NAME} > app.log 2>&1 &
+  echo "Starting new application..."
+  nohup java -jar \
+    -Dspring.profiles.active="${SPRING_PROFILE}" \
+    -Dserver.port="${PORT}" \
+    ${JAR_NAME} > app.log 2>&1 &
 
-echo "Health checking..."
-app_health_check
+  echo "Health checking..."
+  app_health_check
 
-echo "Application Deployment completed!!"
+  echo "Application Deployment completed!!"
+}
