@@ -46,7 +46,7 @@ pipeline {
                     excludes: '',
                     execCommand: """
                       cd ${REMOTE_WORK_DIR}
-                      ./deploy.sh ${PORT} ${REMOTE_WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}'
+                      ./deploy.sh ${PORT} ${REMOTE_WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}
                     """,
                     execTimeout: 120000,
                     flatten: false,

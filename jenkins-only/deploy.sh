@@ -27,11 +27,25 @@ app_health_check() {
   fi
 }
 
+# shutdown existing application
+shutdown() {
+  echo ">> kill current running application(${PORT})"
+  current_pid=$(pgrep -f "java.*${PORT}.*${JAR_NAME}")
+  if [ -z "${current_pid}" ];
+  then
+    echo "no current running application >> pass killing process"
+  else
+    echo "stop java application(${PORT}) - ${current_pid}"
+    sudo kill -TERM "${current_pid}"
+    sleep 2
+  fi
+}
+
 # deploy and run application
 deploy() {
   cd ${WORK_DIR}
-  echo "Stopping existing application..."
-  pkill -f ${JAR_NAME} || true
+  echo "Shutdown existing application..."
+  shutdown
 
   echo "Starting new application..."
   nohup java -jar \
@@ -44,3 +58,5 @@ deploy() {
 
   echo "Application Deployment completed!!"
 }
+
+deploy
