@@ -47,8 +47,8 @@ pipeline {
                     execTimeout: 120000,
                     patternSeparator: '[, ]+',
                     remoteDirectory: 'deploy',
-                    removePrefix: '/jenkins-only',
-                    sourceFiles: "/jenkins-only/${SCRIPT_FILE}",
+                    removePrefix: 'jenkins-only',
+                    sourceFiles: "jenkins-only/${SCRIPT_FILE}",
                     execCommand: """
                       cd ${REMOTE_WORK_DIR}
                       chmod 500 ${SCRIPT_FILE}
@@ -65,8 +65,8 @@ pipeline {
                     patternSeparator: '[, ]+',
                     remoteDirectory: 'deploy',
                     remoteDirectorySDF: false,
-                    removePrefix: '/build/libs',
-                    sourceFiles: "/build/libs/${JAR_NAME}",
+                    removePrefix: 'build/libs',
+                    sourceFiles: "build/libs/${JAR_NAME}",
                     execCommand: """
                       cd ${REMOTE_WORK_DIR}
                       ./deploy.sh ${PORT} ${REMOTE_WORK_DIR} ${SPRING_PROFILE} ${JAR_NAME}
