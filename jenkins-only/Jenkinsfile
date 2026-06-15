@@ -49,7 +49,7 @@ pipeline {
                     sourceFiles: "jenkins-only/${SCRIPT_FILE}",
                     execCommand: """
                       cd ${REMOTE_WORK_DIR}
-                      chmod 500 ${SCRIPT_FILE}
+                      chmod 700 ${SCRIPT_FILE}
                     """,
                   ),
                   // 2. deploying application file
