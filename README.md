@@ -1,15 +1,8 @@
 # CI/CD Demonstration
 
-## Jenkins Plugin Requirement
+## Contents
 
-- Publish over SSH
-- Lockable Resources Plugin
-- Pipeline: Stage View Plugin (optional)
-
-## Deployment scripts
-
-- [deploy.sh](https://github.com/joshua-hb-lee/cicd-demonstration/blob/jenkins/jenkins-only/deploy.sh) - Automates the deployment process on the remote server.
-- [Jenkinsfile](https://github.com/joshua-hb-lee/cicd-demonstration/blob/jenkins/jenkins-only/Jenkinsfile) - Defines the CI/CD pipeline. 
-
-## Blog Post
-[Building CI/CD Pipeline with Jenkins (1) — From Build to Deployment](https://medium.com/@hanbin-joshua/building-ci-cd-pipeline-with-jenkins-1-from-build-to-deployment-65729334b1e6)
+1. [Jenkins](https://github.com/joshua-hb-lee/cicd-demonstration/tree/jenkins)
+2. Jenkins + Ansible
+3. Jenkins + Kubernetes
+4. Github Actions + ArgoCD (GitOps)
