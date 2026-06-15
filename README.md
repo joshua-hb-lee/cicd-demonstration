@@ -1,4 +1,4 @@
-# CI/CD Demonstration
+# CI/CD Demonstration using Jenkins Only
 
 ## Jenkins Plugin Requirement
 
