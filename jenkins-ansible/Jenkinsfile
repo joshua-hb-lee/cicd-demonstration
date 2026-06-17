@@ -10,6 +10,8 @@ pipeline {
     stage('Init') {
       steps {
         script {
+          ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
+          ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/test.yaml"
           sh 'printenv'
         }
       }
@@ -24,6 +26,22 @@ pipeline {
     stage('Build') {
       steps {
         sh './gradlew clean build -x test'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        lock(resource: 'deployment') {
+          ansiblePlaybook(
+            installation: 'ansible-agent',
+            inventory: "${ANSIBLE_INVENTORY}",
+            playbook: "${ANSIBLE_PLAYBOOK}",
+            extraVars: [
+              hello: "world",
+              beanie: "joy"
+            ]
+          )
+        }
       }
     }
   }
