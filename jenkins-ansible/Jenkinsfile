@@ -10,7 +10,6 @@ pipeline {
     stage('Init') {
       steps {
         script {
-
           sh 'printenv'
         }
       }
