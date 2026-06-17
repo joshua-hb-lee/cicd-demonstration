@@ -5,4 +5,4 @@
   tasks:
     - name: Debug extra vars
       ansible.builtin.debug:
-        msg: "{{ hello }}, {{ 0beanie }}"
+        msg: "{{ hello }}, {{ beanie }}"
