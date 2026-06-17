@@ -34,6 +34,7 @@ pipeline {
         lock(resource: 'deployment') {
           ansiblePlaybook(
             installation: 'ansible-agent',
+            disableHostKeyChecking: true, // not recommended (only for demo environment)
             inventory: "${ANSIBLE_INVENTORY}",
             playbook: "${ANSIBLE_PLAYBOOK}",
             extraVars: [
