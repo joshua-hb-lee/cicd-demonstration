@@ -35,9 +35,9 @@
     mode: 0644
 
 - name: "Copy {{ app_name }}.conf file to remote server"
-  ansible.builtin.copy:
-    src: "{{ app_name }}.conf"
-    dest: "{{ nginx_conf_dir }}/conf.d/"
+  ansible.builtin.template:
+    src: "{{ app_name }}.conf.j2"
+    dest: "{{ nginx_conf_dir }}/conf.d/{{ app_name }}.conf"
     mode: 0644
 
 - name: Test nginx configuration
