@@ -32,8 +32,6 @@
 - name: Deploy Application
   ansible.builtin.include_tasks:
     file: simple_deploy/main.yml
-  vars:
-    app_port: 8081
 
 - name: Finish
   ansible.builtin.debug:

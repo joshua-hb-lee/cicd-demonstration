@@ -8,6 +8,7 @@ pipeline {
 
   environment {
     APP_NAME = "cicd-demo"
+    APP_PORT = 8081
     JAR_NAME = "${APP_NAME}.jar"
     SPRING_PROFILE = "prod"
     ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
@@ -73,6 +74,7 @@ pipeline {
             extraVars: [
               app_name: "${APP_NAME}",
               spring_profile: "${SPRING_PROFILE}",
+              app_port: "${APP_PORT}"
             ]
           )
         }
