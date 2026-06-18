@@ -10,8 +10,11 @@ pipeline {
     stage('Init') {
       steps {
         script {
+          APP_NAME = "cicd-demo"
+          JAR_NAME = "${APP_NAME}.jar"
+          SPRING_PROFILE = "prod"
           ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
-          ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/test.yaml"
+          ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yaml"
           sh 'printenv'
         }
       }
@@ -32,14 +35,41 @@ pipeline {
     stage('Deploy') {
       steps {
         lock(resource: 'deployment') {
+          // 1. transfer application build artifact
+          sshPublisher(
+            publishers: [
+              sshPublisherDesc(
+                configName: 'remote-server',
+                transfers: [
+                  sshTransfer(
+                    cleanRemote: false,
+                    excludes: '',
+                    execTimeout: 120000,
+                    flatten: false,
+                    makeEmptyDirs: false,
+                    noDefaultExcludes: false,
+                    patternSeparator: '[, ]+',
+                    remoteDirectory: 'deploy',
+                    remoteDirectorySDF: false,
+                    removePrefix: 'build/libs',
+                    sourceFiles: "build/libs/${JAR_NAME}",
+                  )
+                ],
+                usePromotionTimestamp: false,
+                useWorkspaceInPromotion: false,
+                verbose: true
+              )
+            ]
+          )
+          // 2. deploy the application using Ansible Playbook
           ansiblePlaybook(
             installation: 'ansible-agent',
             disableHostKeyChecking: true, // not recommended (only for demo environment)
             inventory: "${ANSIBLE_INVENTORY}",
             playbook: "${ANSIBLE_PLAYBOOK}",
             extraVars: [
-              hello: "world",
-              beanie: "joy"
+              app_name: "${APP_NAME}",
+              spring_profile: "${SPRING_PROFILE}",
             ]
           )
         }

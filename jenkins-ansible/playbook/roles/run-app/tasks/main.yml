@@ -1,0 +1,40 @@
+---
+- name: Check JAR file exists
+  block:
+    - name: Register JAR file
+      ansible.builtin.stat:
+        path: "{{ remote_deploy_path }}/{{ app_name }}.jar"
+      register: jar_file
+
+    - name: Fail and print message
+      ansible.builtin.fail:
+        msg: "{{ app_name }}.jar does not exist"
+      when: not jar_file.stat.exists
+
+    - name: Print success message
+      ansible.builtin.debug:
+        msg: "{{ app_name }}.jar exists!!"
+
+- name: Copy JAR file for running application
+  ansible.builtin.copy:
+    src: "{{ remote_deploy_path }}/{{ app_name }}.jar"
+    remote_src: yes
+    dest: "{{ remote_app_path }}/{{ app_name }}.jar"
+    owner: "{{ remote_server_user }}"
+    group: "{{ remote_server_group }}"
+    mode: 0644
+
+- name: Remove deployed JAR file
+  ansible.builtin.file:
+    state: absent
+    path: "{{ remote_deploy_path }}/{{ app_name }}.jar"
+
+- name: Deploy Application
+  ansible.builtin.include_tasks:
+    file: simple_deploy/main.yml
+  vars:
+    app_port: 8080
+
+- name: Finish
+  ansible.builtin.debug:
+    msg: "All tasks completed!!"

@@ -1,0 +1,24 @@
+---
+- name: "Make directory({{ remote_app_path }})"
+  ansible.builtin.file:
+    path: "{{ remote_app_path }}"
+    state: directory
+    owner: "{{ remote_server_user }}"
+    group: "{{ remote_server_group }}"
+    mode: 0755
+
+- name: "Make directory({{ remote_app_log_path }})"
+  ansible.builtin.file:
+    path: "{{ remote_app_log_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ remote_server_user }}"
+    group: "{{ remote_server_group }}"
+
+- name: "Make directory({{ remote_app_env_path }})"
+  ansible.builtin.file:
+    path: "{{ remote_app_env_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ remote_server_user }}"
+    group: "{{ remote_server_group }}"

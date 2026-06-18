@@ -1,0 +1,23 @@
+- name: "Copy service script file to remote server"
+  ansible.builtin.template:
+    src: zero-downtime-deploy.sh.j2
+    dest: "{{ remote_app_path }}/service.sh"
+    owner: "{{ remote_server_user }}"
+    group: "{{ remote_server_group }}"
+    mode: 0755
+
+- name: "Shutdown old application - {{ item.port }}"
+  ansible.builtin.command: "{{ remote_app_path }}/service.sh shutdown {{ app_port }}"
+  register: result
+  become: false
+
+- ansible.builtin.debug:
+    msg: "{{ result.stdout_lines }}"
+
+- name: "Run service script - {{ item.port }}"
+  ansible.builtin.command: "{{ remote_app_path }}/service.sh run {{ app_port }}"
+  register: result
+  become: false
+
+- ansible.builtin.debug:
+    msg: "{{ result.stdout_lines }}"

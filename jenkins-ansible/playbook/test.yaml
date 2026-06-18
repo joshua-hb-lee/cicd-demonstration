@@ -1,8 +1,0 @@
----
-- name: Test Ansible
-  hosts: appservers
-
-  tasks:
-    - name: Debug extra vars
-      ansible.builtin.debug:
-        msg: "{{ hello }}, {{ beanie }}"
