@@ -1,7 +1,6 @@
 ---
 - name: "Deploy Demo App"
   hosts: appservers
-  become: true
   vars_files:
     - group_vars/all.yml
   roles:
