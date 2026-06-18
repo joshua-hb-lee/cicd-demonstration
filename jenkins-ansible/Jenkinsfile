@@ -6,15 +6,23 @@ pipeline {
   // Disallow concurrent executions of the Pipeline.
   options { disableConcurrentBuilds() }
 
+  environment {
+    APP_NAME = "cicd-demo"
+    JAR_NAME = "${APP_NAME}.jar"
+    SPRING_PROFILE = "prod"
+    ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
+    ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yaml"
+  }
+
   stages {
     stage('Init') {
       steps {
         script {
-          APP_NAME = "cicd-demo"
-          JAR_NAME = "${APP_NAME}.jar"
-          SPRING_PROFILE = "prod"
-          ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
-          ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yaml"
+//           APP_NAME = "cicd-demo"
+//           JAR_NAME = "${APP_NAME}.jar"
+//           SPRING_PROFILE = "prod"
+//           ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
+//           ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yaml"
           sh 'printenv'
         }
       }
