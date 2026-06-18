@@ -1,6 +1,6 @@
 pkg_mgr:
-  Debian: apt
+  Ubuntu: apt
 java_package:
-  Debian: openjdk-17-jre-headless
+  Ubuntu: openjdk-17-jre-headless
 nginx_package:
-  Debian: nginx
+  Ubuntu: nginx
