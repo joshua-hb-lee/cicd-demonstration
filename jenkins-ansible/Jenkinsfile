@@ -12,7 +12,7 @@ pipeline {
     JAR_NAME = "${APP_NAME}.jar"
     SPRING_PROFILE = "prod"
     ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
-    ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yaml"
+    ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yml"
   }
 
   stages {
