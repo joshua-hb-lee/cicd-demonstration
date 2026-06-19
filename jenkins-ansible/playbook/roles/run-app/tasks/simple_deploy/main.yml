@@ -6,7 +6,7 @@
     group: "{{ remote_server_group }}"
     mode: 0755
 
-- name: "Shutdown old application - {{ app_port }}"
+- name: "Shutdown the old application - {{ app_port }}"
   ansible.builtin.command: "{{ remote_app_path }}/service.sh shutdown {{ app_port }}"
   register: result
   become: false
