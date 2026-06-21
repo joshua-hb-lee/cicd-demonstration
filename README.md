@@ -41,8 +41,15 @@ playbook/
 │   │       └── simple-deploy.sh.j2
 │   └── setup/
 │       └── tasks/
+│           └── main.yml
 └── deploy-app.yaml
 ```
+
+### Playbook Process (based on Roles)
+- package
+- nginx
+- setup
+- run-app
 
 ## Blog Post
 ...
