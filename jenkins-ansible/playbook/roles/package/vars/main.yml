@@ -1,0 +1,6 @@
+pkg_mgr:
+  Ubuntu: apt
+java_package:
+  Ubuntu: openjdk-17-jre-headless
+nginx_package:
+  Ubuntu: nginx
