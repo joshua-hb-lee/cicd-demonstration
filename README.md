@@ -52,4 +52,4 @@ playbook/
 - run-app
 
 ## Blog Post
-...
+[Building CI/CD Pipeline with Jenkins (2) — Ansible Integration](https://medium.com/@hanbin-joshua/building-ci-cd-pipeline-with-jenkins-2-ansible-integration-0364ec049ab9)
