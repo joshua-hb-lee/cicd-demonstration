@@ -38,6 +38,15 @@
   tags:
     - rolling_update
 
+- name: "[Blue Green] Deploy Application"
+  ansible.builtin.include_tasks:
+    file: blue_green/main.yml
+    apply:
+      tags:
+        - blue_green
+  tags:
+    - rolling_update
+
 - name: Finish
   ansible.builtin.debug:
     msg: "All tasks completed!!"

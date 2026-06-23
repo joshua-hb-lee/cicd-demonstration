@@ -1,4 +1,4 @@
-- name: "[Rolling Update] Copy service script file to remote server"
+- name: "[Rolling Update] Copy the script file to remote server"
   ansible.builtin.template:
     src: rolling-update-deploy.sh.j2
     dest: "{{ remote_app_path }}/service.sh"
