@@ -1,4 +1,4 @@
-# CI/CD Demonstration with Jenkins and Ansible
+# CI/CD Demonstration with Jenkins and Ansible (+ Deployment Strategies)
 
 ## Jenkins Plugin Requirement
 
@@ -9,8 +9,12 @@
 
 ## Deployment Scripts
 
-- [Jenkinsfile](https://github.com/joshua-hb-lee/cicd-demonstration/blob/jenkins-ansible/jenkins-ansible/Jenkinsfile)
-- [Ansible Playbook](https://github.com/joshua-hb-lee/cicd-demonstration/tree/jenkins-ansible/jenkins-ansible/playbook)
+- [Jenkinsfile](https://github.com/joshua-hb-lee/cicd-demonstration/blob/jenkins-ansible/jenkins-ansible-strategies/Jenkinsfile)
+- [Ansible Playbook](https://github.com/joshua-hb-lee/cicd-demonstration/tree/jenkins-ansible/jenkins-ansible-strategies/playbook)
+
+## Deployment Strategies
+- Rolling Update
+- Blue-Green Deployments
 
 ## Ansible Playbook Structure
 ```
@@ -34,7 +38,8 @@ playbook/
 │   │       └── main.yml
 │   ├── run-app/
 │   │   ├── tasks/
-│   │   │   ├── simple_deploy/
+│   │   │   ├── rolling_update/
+│   │   │   │   ├── deploy.yml
 │   │   │   │   └── main.yml
 │   │   │   └── main.yml
 │   │   └── templates/
@@ -52,4 +57,4 @@ playbook/
 - run-app
 
 ## Blog Post
-[Building CI/CD Pipeline with Jenkins (2) — Ansible Integration](https://medium.com/@hanbin-joshua/building-ci-cd-pipeline-with-jenkins-2-ansible-integration-0364ec049ab9)
+...

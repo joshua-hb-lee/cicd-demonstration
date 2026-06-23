@@ -1,3 +1,12 @@
+upstream cicd-demo-upstream {
+  least_conn;
+  server 127.0.0.1:8081;
+  server 127.0.0.1:8082;
+  server 127.0.0.1:8083 down;
+  server 127.0.0.1:8084 down;
+  keepalive 16;
+}
+
 server {
   listen       80;
   listen       [::]:80;
@@ -9,7 +18,7 @@ server {
   error_log    /var/log/nginx/error-app.log  warn;
 
   location / {
-    proxy_pass                            http://127.0.0.1:{{ app_port }};
+    proxy_pass                            http://cicd-demo-upstream;
 
     proxy_http_version                    1.1;
     proxy_set_header      Connection      "";

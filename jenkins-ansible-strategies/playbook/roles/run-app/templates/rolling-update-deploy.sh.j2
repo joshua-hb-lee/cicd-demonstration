@@ -8,6 +8,7 @@ if [ "$PROCESS_SHELL_COUNT" -gt 1 ]; then
     exit 10
 fi
 
+# parameters
 COMMAND=$1
 PORT=$2
 
@@ -18,6 +19,64 @@ APP_NAME="{{ app_name }}"
 SPRING_PROFILE="{{ spring_profile }}"
 STD_OUT=${APP_WORKSPACE}/logs/stdout_${PORT}.log
 STD_ERR=${APP_WORKSPACE}/logs/stderr_${PORT}.log
+
+# nginx proxy
+PROXY_CONF_FILE=/etc/nginx/conf.d/${APP_NAME}.conf
+PROXY_TARGET_UPSTREAM="server 127.0.0.1:${PORT}"
+
+'''
+Toggle proxy upstream status (up, down)
+According to the $toggle_status, the upstream status is changed.
+
+  # cicd-demo.conf (nginx conf)
+  upstream cicd-demo-upstream {
+    least_conn;
+    server 127.0.0.1:8080;
+    server 127.0.0.1:8081;
+
+up)   server 127.0.0.1 down;  > server 127.0.0.1;
+down) server 127.0.0.1;       > server 127.0.0.1 down;
+'''
+toggle_proxy_upstream() {
+  local toggle_status
+  local from_upstream_status
+  local to_upstream_status
+  local target_upstream_status
+
+  toggle_status=$1
+  case ${toggle_status} in
+    up)
+      from_upstream_status="${PROXY_TARGET_UPSTREAM}\sdown;"
+      to_upstream_status="${PROXY_TARGET_UPSTREAM};"
+      ;;
+    down)
+      from_upstream_status="${PROXY_TARGET_UPSTREAM};"
+      to_upstream_status="${PROXY_TARGET_UPSTREAM} down;"
+      ;;
+    *)
+      echo "(toggle_proxy_upstream) Invalid command - ${toggle_status}"
+      exit 40;
+      ;;
+  esac
+
+  echo ">> proxy upstream ${PORT} ${toggle_status}"
+  target_upstream_status=$(grep "${to_upstream_status}" "${PROXY_CONF_FILE}")
+  if [ -n "${target_upstream_status}" ]
+  then
+    echo "proxy upstream ${PORT} status - already ${toggle_status}"
+  else
+    echo "proxy upstream ${PORT} setting ${toggle_status}"
+    sudo sed -i "s/\(${from_upstream_status}\)/${to_upstream_status}/g" "${PROXY_CONF_FILE}"
+  fi
+
+  if ! sudo nginx -t;
+  then
+    echo "Invalid nginx conf > upstream(${PORT}}) ${toggle_status}"
+    exit 40
+  fi
+
+  sudo systemctl reload nginx
+}
 
 # health check
 CHECK_MAX_COUNT=10
@@ -46,6 +105,9 @@ shutdown() {
   echo "-----------------------------------------"
   echo "[SHUTDOWN] ${APP_NAME}:${PORT}"
   echo "-----------------------------------------"
+
+  # First, the upstream on the proxy should be down.
+  toggle_proxy_upstream down
 
   echo ">> kill current running application(${PORT})"
   current_pid=$(pgrep -f "java.*${PORT}")
@@ -81,6 +143,10 @@ run_app() {
 
   echo ">> application(${PORT}) health check"
   app_health_check
+
+  # After running an application is complete,
+  # the upstream on the proxy should be up.
+  toggle_proxy_upstream up
 }
 
 case "${COMMAND}" in

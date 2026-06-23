@@ -29,9 +29,14 @@
     state: absent
     path: "{{ remote_deploy_path }}/{{ app_name }}.jar"
 
-- name: Deploy Application
+- name: "[Rolling Update] Deploy Application"
   ansible.builtin.include_tasks:
-    file: simple_deploy/main.yml
+    file: rolling_update/main.yml
+    apply:
+      tags:
+        - rolling_update
+  tags:
+    - rolling_update
 
 - name: Finish
   ansible.builtin.debug:
