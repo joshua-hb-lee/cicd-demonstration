@@ -108,7 +108,19 @@ run_group_app() {
   done
 }
 
-# toggle proxy upstream status (param: port, toggle_status(up/down))
+'''
+Toggle proxy upstream status (up, down)
+According to the $toggle_status, the upstream status is changed.
+
+  # cicd-demo.conf (nginx conf)
+  upstream cicd-demo-upstream {
+    least_conn;
+    server 127.0.0.1:8080;
+    server 127.0.0.1:8081;
+
+up)   server 127.0.0.1 down;  > server 127.0.0.1;
+down) server 127.0.0.1;       > server 127.0.0.1 down;
+'''
 toggle_proxy_upstream() {
   local target_port=$1
   local toggle_status=$2
