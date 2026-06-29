@@ -4,6 +4,8 @@
   become: true  # root privilege
   vars_files:
     - group_vars/all.yml
+  tags:
+    - deploy
   roles:
     - package
     - nginx
