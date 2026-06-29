@@ -10,9 +10,6 @@
   ansible.builtin.command: "{{ remote_app_path }}/service.sh run {{ item.port }}"
   register: result
   become: false
-  environment:
-    VAULT_DOMAIN_ADDR: "{{ vault_address }}"
-    VAULT_AUTH_TOKEN: "{{ vault_token }}"
   when: item.action == "up"
 
 - ansible.builtin.debug:
