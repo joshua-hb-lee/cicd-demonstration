@@ -40,7 +40,7 @@
     src: "{{ app_name }}.conf.j2"
     dest: "{{ nginx_conf_dir }}/conf.d/{{ app_name }}.conf"
     mode: 0644
-    force: false # the file will only be transferred if the destination does not exist.
+#    force: false # the file will only be transferred if the destination does not exist.
 
 - name: Test nginx configuration
   ansible.builtin.shell: 'nginx -t'
