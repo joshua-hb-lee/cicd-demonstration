@@ -37,7 +37,7 @@
       tags:
         - rolling_update
   tags:
-    - never
+    - never # only run this task in the 'rolling_update' tag
     - rolling_update
 
 - name: "[Blue Green] Deploy Application"
@@ -47,7 +47,7 @@
       tags:
         - blue_green
   tags:
-    - never
+    - never # only run this task in the 'blue_green' tag
     - blue_green
 
 - name: Finish
