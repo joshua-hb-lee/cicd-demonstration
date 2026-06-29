@@ -37,6 +37,7 @@
       tags:
         - rolling_update
   tags:
+    - never
     - rolling_update
 
 - name: "[Blue Green] Deploy Application"
@@ -46,6 +47,7 @@
       tags:
         - blue_green
   tags:
+    - never
     - blue_green
 
 - name: Finish

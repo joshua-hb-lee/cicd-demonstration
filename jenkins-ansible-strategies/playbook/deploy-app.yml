@@ -5,7 +5,7 @@
   vars_files:
     - group_vars/all.yml
   tags:
-    - deploy
+    - always
   roles:
     - package
     - nginx
