@@ -46,7 +46,7 @@
       tags:
         - blue_green
   tags:
-    - rolling_update
+    - blue_green
 
 - name: Finish
   ansible.builtin.debug:

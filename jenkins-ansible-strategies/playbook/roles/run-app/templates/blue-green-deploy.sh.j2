@@ -12,7 +12,7 @@ fi
 COMMAND=$1
 
 APP_WORKSPACE="{{ remote_app_path }}"
-MODULE_NAME="{{ module_name }}"
+APP_NAME="{{ app_name }}"
 
 # app
 SPRING_PROFILE="{{ spring_profile }}"
@@ -20,7 +20,7 @@ STD_OUT=${APP_WORKSPACE}/logs/stdout
 STD_ERR=${APP_WORKSPACE}/logs/stderr
 
 # nginx proxy
-PROXY_CONF_FILE=/etc/nginx/conf.d/${MODULE_NAME}.conf
+PROXY_CONF_FILE=/etc/nginx/conf.d/${APP_NAME}.conf
 PROXY_TARGET_UPSTREAM="server 127.0.0.1"
 
 # blue-green setup
@@ -80,7 +80,7 @@ run_app() {
   nohup java -jar \
     -Dspring.profiles.active="${SPRING_PROFILE}" \
     -Dserver.port="${target_port}" \
-    "${APP_WORKSPACE}"/"${MODULE_NAME}".jar 1>"${STD_OUT}_${target_port}" 2>"${STD_ERR}_${target_port}" &
+    "${APP_WORKSPACE}"/"${APP_NAME}".jar 1>"${STD_OUT}_${target_port}" 2>"${STD_ERR}_${target_port}" &
 
   echo ">> application(${target_port}) health check"
   CHECK_COUNT=0
@@ -115,8 +115,10 @@ According to the $toggle_status, the upstream status is changed.
   # cicd-demo.conf (nginx conf)
   upstream cicd-demo-upstream {
     least_conn;
-    server 127.0.0.1:8080;
     server 127.0.0.1:8081;
+    server 127.0.0.1:8082;
+    server 127.0.0.1:8083 down;
+    server 127.0.0.1:8084 down;
 
 up)   server 127.0.0.1 down;  > server 127.0.0.1;
 down) server 127.0.0.1;       > server 127.0.0.1 down;
