@@ -4,10 +4,14 @@
   become: true  # root privilege
   vars_files:
     - group_vars/all.yml
-  tags:
-    - always
   roles:
-    - package
-    - nginx
-    - setup
-    - run-app
+    - role: package
+      tags:
+        - deploy
+    - role: nginx
+      tags:
+        - deploy
+    - role: setup
+      tags:
+        - deploy
+    - role: run-app

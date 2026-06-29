@@ -1,5 +1,7 @@
 ---
 - name: Check JAR file exists
+  tags:
+    - deploy
   block:
     - name: Register JAR file
       ansible.builtin.stat:
@@ -24,11 +26,15 @@
     group: "{{ remote_server_group }}"
     mode: 0644
     force: true # replace the remote file when contents are different than the source.
+  tags:
+    - deploy
 
 - name: Remove deployed JAR file
   ansible.builtin.file:
     state: absent
     path: "{{ remote_deploy_path }}/{{ app_name }}.jar"
+  tags:
+    - deploy
 
 - name: "[Rolling Update] Deploy Application"
   ansible.builtin.include_tasks:
@@ -37,7 +43,6 @@
       tags:
         - rolling_update
   tags:
-    - never # only run this task in the 'rolling_update' tag
     - rolling_update
 
 - name: "[Blue Green] Deploy Application"
@@ -47,9 +52,10 @@
       tags:
         - blue_green
   tags:
-    - never # only run this task in the 'blue_green' tag
     - blue_green
 
 - name: Finish
   ansible.builtin.debug:
     msg: "All tasks completed!!"
+  tags:
+    - deploy
