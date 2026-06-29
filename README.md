@@ -37,13 +37,21 @@ playbook/
 │   │   └── vars/
 │   │       └── main.yml
 │   ├── run-app/
+│   │   ├── files/
+│   │   │   ├── BLUE
+│   │   │   └── GREEN
 │   │   ├── tasks/
+│   │   │   ├── blue_green/
+│   │   │   │   ├── check_file.yml
+│   │   │   │   ├── deploy.yml
+│   │   │   │   └── main.yml
 │   │   │   ├── rolling_update/
 │   │   │   │   ├── deploy.yml
 │   │   │   │   └── main.yml
 │   │   │   └── main.yml
 │   │   └── templates/
-│   │       └── simple-deploy.sh.j2
+│   │       ├── blue-green-deploy.sh.j2
+│   │       └── rolling-update-deploy.sh.j2
 │   └── setup/
 │       └── tasks/
 │           └── main.yml
@@ -57,4 +65,3 @@ playbook/
 - run-app
 
 ## Blog Post
-...
