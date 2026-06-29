@@ -5,4 +5,4 @@
     owner: "{{ remote_server_user }}"
     group: "{{ remote_server_group }}"
     mode: 0644
-    force: false # the file will only be transferred if the destination does not exist.
+    force: true # the file will only be transferred if the destination does not exist.
