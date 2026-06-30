@@ -72,7 +72,7 @@ pipeline {
             disableHostKeyChecking: true, // not recommended (only for demo environment)
             inventory: "${ANSIBLE_INVENTORY}",
             playbook: "${ANSIBLE_PLAYBOOK}",
-            tags: 'deploy,blue_green', // specify the deployment strategy: 'rolling_update', 'blue_green'
+            tags: 'deploy,rolling_update', // specify the deployment strategy: 'rolling_update', 'blue_green'
             extraVars: [
               app_name: "${APP_NAME}",
               spring_profile: "${SPRING_PROFILE}",

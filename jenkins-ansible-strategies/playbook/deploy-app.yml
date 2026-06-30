@@ -4,14 +4,16 @@
   become: true  # root privilege
   vars_files:
     - group_vars/all.yml
+  # you can skip 'package', 'nginx', and 'setup' roles
+  # by excluding 'init' tag in the ansible-playbook command.
   roles:
     - role: package
       tags:
-        - deploy
+        - init
     - role: nginx
       tags:
-        - deploy
+        - init
     - role: setup
       tags:
-        - deploy
+        - init
     - role: run-app
