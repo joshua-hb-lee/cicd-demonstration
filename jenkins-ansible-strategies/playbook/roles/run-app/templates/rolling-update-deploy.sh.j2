@@ -34,8 +34,8 @@ According to the $toggle_status, the upstream status is changed.
     server 127.0.0.1:8080;
     server 127.0.0.1:8081;
 
-up)   server 127.0.0.1 down;  > server 127.0.0.1;
-down) server 127.0.0.1;       > server 127.0.0.1 down;
+up)   server 127.0.0.1:8080 down;  > server 127.0.0.1:8080;
+down) server 127.0.0.1:8080;       > server 127.0.0.1:8080 down;
 '''
 toggle_proxy_upstream() {
   local toggle_status
