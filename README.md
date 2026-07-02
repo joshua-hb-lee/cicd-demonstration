@@ -67,4 +67,4 @@ playbook/
   - rolling_update
 
 ## Blog Post
-[Implementing Two Zero-Downtime Deployment Strategies: Rolling Update and Blue-Green Deployment](https://medium.com/@hanbin-joshua/implementing-two-zero-downtime-deployment-strategies-rolling-update-and-blue-green-deployment-d23497ac2ffc)
+[Implementing Two Zero-Downtime Deployment Strategies — Rolling Update and Blue-Green Deployment](https://medium.com/@hanbin-joshua/implementing-two-zero-downtime-deployment-strategies-rolling-update-and-blue-green-deployment-d23497ac2ffc)
