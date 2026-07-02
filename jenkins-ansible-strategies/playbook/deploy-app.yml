@@ -1,0 +1,19 @@
+---
+- name: "Deploy Demo App"
+  hosts: appservers
+  become: true  # root privilege
+  vars_files:
+    - group_vars/all.yml
+  # you can skip 'package', 'nginx', and 'setup' roles
+  # by excluding 'init' tag in the ansible-playbook command.
+  roles:
+    - role: package
+      tags:
+        - init
+    - role: nginx
+      tags:
+        - init
+    - role: setup
+      tags:
+        - init
+    - role: run-app

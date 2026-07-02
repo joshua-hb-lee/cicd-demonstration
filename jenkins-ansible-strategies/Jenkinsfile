@@ -1,4 +1,5 @@
 pipeline {
+  // Use ansible agent server
   agent {
     label 'ansible-agent'
   }
@@ -12,7 +13,7 @@ pipeline {
     JAR_NAME = "${APP_NAME}.jar"
     SPRING_PROFILE = "prod"
     ANSIBLE_INVENTORY = "${HOME}/ansible/inventory"
-    ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible/playbook/deploy-app.yml"
+    ANSIBLE_PLAYBOOK = "${WORKSPACE}/jenkins-ansible-strategies/playbook/deploy-app.yml"
   }
 
   stages {
@@ -71,6 +72,7 @@ pipeline {
             disableHostKeyChecking: true, // not recommended (only for demo environment)
             inventory: "${ANSIBLE_INVENTORY}",
             playbook: "${ANSIBLE_PLAYBOOK}",
+            tags: 'deploy,rolling_update', // specify the deployment strategy: 'rolling_update', 'blue_green'
             extraVars: [
               app_name: "${APP_NAME}",
               spring_profile: "${SPRING_PROFILE}",
