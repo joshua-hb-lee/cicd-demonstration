@@ -12,4 +12,4 @@
 1. [Before CI/CD — From Writing Code to Running It on a Server](https://medium.com/@hanbin-joshua/before-ci-cd-from-writing-code-to-running-it-on-a-server-fb8b6a149eac)
 2. [Building CI/CD Pipeline with Jenkins (1) — From Build to Deployment](https://medium.com/@hanbin-joshua/building-ci-cd-pipeline-with-jenkins-1-from-build-to-deployment-65729334b1e6)
 3. [Building CI/CD Pipeline with Jenkins (2) — Ansible Integration](https://medium.com/@hanbin-joshua/building-ci-cd-pipeline-with-jenkins-2-ansible-integration-0364ec049ab9)
-4. Implementing Two Zero-Downtime Deployment Strategies: Rolling Update and Blue-Green Deployment
+4. [Implementing Two Zero-Downtime Deployment Strategies: Rolling Update and Blue-Green Deployment](https://medium.com/@hanbin-joshua/implementing-two-zero-downtime-deployment-strategies-rolling-update-and-blue-green-deployment-d23497ac2ffc)
